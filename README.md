@@ -1,5 +1,9 @@
 # Genesis DAO
 
+A general purpose dao designed to empower community-driven decision-making. Whether you’re managing a community fund, organizing events, or making collective choices, Genesis DAO provides a straightforward framework with core features such as base proposals for adding and removing members to dao, granting and revoking voting accesses and a general purpose proposal for any community action.
+
+The versatile nature of general purpose proposal makes it suitable for any task that needs voting in a community. Weather a socitey is using it to elect their building manager or deciding their monthly maintainance fee, general purpose proposal can cover all.
+
 ## Testnet dao contract id
 
 CC3QBUVTXRRIW3GOQ7JG2URJU2CCK4VDYAW7QGDGUJU6L5MSQMINZXIK

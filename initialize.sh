@@ -6,4 +6,5 @@ soroban contract invoke \
     --source-account oggy \
     -- \
     initialize \
-    --initial_members "GARFWFSVEUHXC72ZTZZCQIMR4XCONULQ3JTKNX4HBP6Y3ZZMS4GEGM7K" \
+    --initial_members "[('GCCCK5QP24RVHAFFJNBPF6UBQ3RBLG3Y4U2UDNKKXZPQSNLVOC4JOUFS'),('GDOQ5IC2STP43BHTMTHUTDY3OUEAZUEY5IKRJUTXNVZUVIRPAPBWSRAY'),('GCENNJQ22BPJRE4UBFRMGOJGN2IMWZSUMSW76H2JGPQCS52WW7R3XOJS')]" \
+    --metadata "{min_proposal_duration: 3600, max_proposal_duration: 604800, min_quorum_percentage: 50}"
