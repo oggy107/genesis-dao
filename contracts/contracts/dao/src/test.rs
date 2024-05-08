@@ -6,7 +6,7 @@ use std::println;
 
 use super::*;
 use soroban_sdk::testutils::{Address as AddressTest, Ledger, Logs};
-use soroban_sdk::{vec, Address, Env, IntoVal, String, Symbol};
+use soroban_sdk::{vec, Address, Env, IntoVal, String, Symbol, Val};
 
 use mock::*;
 
@@ -20,25 +20,13 @@ fn create_dao<'a>(env: Env, members: &Vec<Address>) -> DaoContractClient<'a> {
     let contract_id = env.register_contract(None, DaoContract);
     let dao = DaoContractClient::new(&env, &contract_id);
 
-    let name = String::from_str(&env, "VoteToken");
-    let symbol = String::from_str(&env, "VTK");
-    let decimals = 2_u32;
-
     let wasm_hash = env
         .deployer()
         .upload_contract_wasm(dao_token_contract::WASM);
-    let salt = BytesN::from_array(&env, &[0_u8; 32]);
-    let init_fn = Symbol::new(&env, "initialize");
-    let init_fn_args: Vec<Val> = (contract_id, name, symbol, decimals).into_val(&env);
 
     dao.initialize(
         members,
-        &dao::TokenContractArgs {
-            wasm_hash,
-            salt,
-            init_fn,
-            init_fn_args,
-        },
+        &wasm_hash,
         &dao::Metadata {
             min_proposal_duration: 3600_u64,   // 1day
             max_proposal_duration: 604800_u64, // 7 days

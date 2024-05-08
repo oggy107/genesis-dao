@@ -11,11 +11,10 @@ use soroban_sdk::{Address, Env, String};
 fn create_token<'a>(env: &'a Env, admin: &'a Address) -> TokenContractClient<'a> {
     let name = String::from_str(&env, "MyToken");
     let symbol = String::from_str(&env, "MTK");
-    let decimals = 2_u32;
 
     let contract_id = env.register_contract(None, TokenContract);
     let token = TokenContractClient::new(&env, &contract_id);
-    token.initialize(admin, &name, &symbol, &decimals);
+    token.initialize(admin, &name, &symbol);
 
     token
 }
@@ -44,7 +43,6 @@ fn already_initialization() {
         &admin,
         &String::from_str(&env, "Test"),
         &String::from_str(&env, "TES"),
-        &2_u32,
     );
 
     // env.logs().print();
@@ -59,15 +57,13 @@ fn meta_data() {
 
     let token = create_token(&env, &admin);
 
-    let decimals = token.decimals();
     let name = token.name();
     let symbol = token.symbol();
 
-    assert_eq!(decimals, 2_u32);
     assert_eq!(name, String::from_str(&env, "MyToken"));
     assert_eq!(symbol, String::from_str(&env, "MTK"));
 
-    println!("metadata: {:?}, {:?}, {}", name, symbol, decimals);
+    println!("metadata: {:?}, {:?}", name, symbol);
 }
 
 #[test]

@@ -1,5 +1,5 @@
 #![no_std]
-use soroban_sdk::{contract, contractimpl, log, Address, BytesN, Env, Val, Vec};
+use soroban_sdk::{contract, contractimpl, Address, BytesN, Env, IntoVal, String, Symbol, Vec};
 
 pub mod types;
 pub use types::*;
@@ -29,31 +29,19 @@ impl DaoContract {
     /// # Arguments
     ///
     /// - `initial_members` - The initial members of the DAO. Must be atleast 3.
-    /// - `dao_token_contract_args` - The arguments for the DAO token contract.
+    /// - `dao_token_wasm_hash` - The WASM hash of the DAO token contract.
     /// - `metadata` - The metadata for the DAO.
     pub fn initialize(
         env: Env,
         initial_members: Vec<Address>,
-        dao_token_contract_args: dao::TokenContractArgs,
+        dao_token_wasm_hash: BytesN<32>,
         metadata: dao::Metadata,
     ) {
-        log!(
-            &env,
-            "DAO initialized with: {} {} {}",
-            initial_members,
-            dao_token_contract_args,
-            metadata
-        );
-
         if initial_members.len() < 3 {
             panic!("Initial members must be atleast 3");
         }
 
-        let dao_token_contract_id = deploy_dao_token_contract(
-            &env,
-            env.current_contract_address(),
-            &dao_token_contract_args,
-        );
+        let dao_token_contract_id = deploy_dao_token_contract(&env, dao_token_wasm_hash);
 
         env.storage()
             .persistent()
@@ -329,17 +317,23 @@ fn has_voting_power(env: &Env, member: Address) -> bool {
     dao_token::balance(env, member) > 0
 }
 
-fn deploy_dao_token_contract(
-    env: &Env,
-    deployer: Address,
-    args: &dao::TokenContractArgs,
-) -> Address {
+fn deploy_dao_token_contract(env: &Env, wasm_hash: BytesN<32>) -> Address {
+    let deployer = env.current_contract_address();
+
+    let name = String::from_str(&env, "VoteToken");
+    let symbol = String::from_str(&env, "VTK");
+
     let deployed_address = env
         .deployer()
-        .with_address(deployer, args.salt.clone())
-        .deploy(args.wasm_hash.clone());
+        .with_address(deployer.clone(), BytesN::from_array(&env, &[0_u8; 32]))
+        .deploy(wasm_hash);
 
-    env.invoke_contract::<()>(&deployed_address, &args.init_fn, args.init_fn_args.clone());
+    env.invoke_contract::<()>(
+        &deployed_address,
+        &Symbol::new(&env, "initialize"),
+        // args.init_fn_args.clone(),
+        (deployer, name, symbol).into_val(env),
+    );
 
     deployed_address
 }

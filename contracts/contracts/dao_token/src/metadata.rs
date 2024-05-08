@@ -4,14 +4,6 @@ pub use crate::types::Metadata;
 
 const METADATA: Symbol = symbol_short!("METADATA");
 
-pub fn read_decimal(env: &Env) -> u32 {
-    env.storage()
-        .instance()
-        .get::<Symbol, Metadata>(&METADATA)
-        .unwrap()
-        .decimal
-}
-
 pub fn read_name(env: &Env) -> String {
     env.storage()
         .instance()

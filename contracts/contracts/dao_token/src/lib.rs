@@ -28,27 +28,14 @@ impl TokenContract {
     /// - `admin` - The address of the admin.
     /// - `name` - The name of the token.
     /// - `symbol` - The symbol of the token.
-    /// - `decimals` - The number of decimals for the token.
-    pub fn initialize(env: Env, admin: Address, name: String, symbol: String, decimals: u32) {
+    pub fn initialize(env: Env, admin: Address, name: String, symbol: String) {
         if has_admin(&env) {
             panic!("Already initialized");
         }
 
-        write_metadata(
-            &env,
-            Metadata {
-                name,
-                symbol,
-                decimal: decimals,
-            },
-        );
+        write_metadata(&env, Metadata { name, symbol });
 
         write_admin(&env, admin);
-    }
-
-    /// Returns the number of decimals used to represent amounts of this token.
-    pub fn decimals(env: Env) -> u32 {
-        read_decimal(&env)
     }
 
     /// Returns the name for this token.

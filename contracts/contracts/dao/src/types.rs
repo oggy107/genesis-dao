@@ -1,4 +1,4 @@
-use soroban_sdk::{contracttype, Address, BytesN, String, Symbol, Val, Vec};
+use soroban_sdk::{contracttype, Address, BytesN, String};
 
 pub mod data_key {
     use super::*;
@@ -31,14 +31,6 @@ pub mod dao {
         pub min_proposal_duration: u64,
         pub max_proposal_duration: u64,
         pub min_quorum_percentage: u32,
-    }
-
-    #[contracttype]
-    pub struct TokenContractArgs {
-        pub salt: BytesN<32>,
-        pub wasm_hash: BytesN<32>,
-        pub init_fn: Symbol,
-        pub init_fn_args: Vec<Val>,
     }
 }
 

@@ -11,5 +11,4 @@ pub enum DataKey {
 pub struct Metadata {
     pub name: String,
     pub symbol: String,
-    pub decimal: u32,
 }
