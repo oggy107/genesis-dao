@@ -8,7 +8,7 @@ The versatile nature of general purpose proposal makes it suitable for any task 
 
 CC3QBUVTXRRIW3GOQ7JG2URJU2CCK4VDYAW7QGDGUJU6L5MSQMINZXIK
 
-*Note: This contract id can become invalid anytime due to data cleanup on stellar testnet*
+*Note: This contract id can become invalid anytime due to data cleanup on stellar testnet.*
 
 ## TestNet config
 
@@ -19,7 +19,7 @@ CC3QBUVTXRRIW3GOQ7JG2URJU2CCK4VDYAW7QGDGUJU6L5MSQMINZXIK
 
 ### Configure soroban CLI
 
-https://developers.stellar.org/docs/smart-contracts/getting-started/setup
+<https://developers.stellar.org/docs/smart-contracts/getting-started/setup>
 
 #### configure testnet
 
@@ -53,7 +53,7 @@ soroban contract deploy --source oggy --wasm "<DAO WASM FILE PATH>" --rpc-url "h
 
 ## Initialize dao contract
 
-**Note: Work still in progress on initialization script**
+**Note: Work still in progress on initialization script.**
 
 Take note of public addresses of the 3 identites you have just created by using `soroban config identity address <IDENTITY NAME>` command or you can pass your own addresses as well
 
